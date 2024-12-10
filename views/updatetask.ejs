@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            margin: 20px 0;
+            color: #333;
+        }
+
+        #task-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .task-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .task-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            color: #444;
+        }
+
+        .task-card p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .task-card span {
+            font-size: 1.2rem;
+            color: green;
+            font-weight: bold;
+        }
+
+        .task-card button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .task-card button:hover {
+            background: #0056b3;
+        }
+
+        .task-card[style*="line-through"] {
+            opacity: 0.7;
+        }
+
+        p.no-tasks {
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+
+    <h2>Update Task</h2>
+
+    <div id="task-list">
+        <% if (tasks.length == 0) { %>
+            <p class="no-tasks">Please Add Tasks First</p>
+        <% } %>
+
+        <% tasks.forEach(task => { %>
+            <div class="task-card" id="<%= task._id %>" style="<%= task.status === 'Completed' ? 'text-decoration: line-through;' : '' %>">
+                <h3><%= task.title %></h3>
+                <p><%= task.description %></p>
+                <p>Status: <%= task.status %></p>
+                <p>Due Date: <%= task.duedate.toISOString().split('T')[0] %></p>
+
+                <% if (task.status !== 'Completed') { %>
+                    <!-- Form to mark task as completed -->
+                    <form action="/task/complete" method="POST">
+                        <input type="hidden" name="taskId" value="<%= task._id %>">
+                        <button type="submit">Complete Task</button>
+                    </form>
+                <% } else { %>
+                    <span>✔️ Task Completed</span>
+                <% } %>
+            </div>
+        <% }) %>
+    </div>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>

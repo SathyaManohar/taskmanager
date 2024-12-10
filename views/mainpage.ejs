@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f3ec78, #af4261); /* Gradient background */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: slideIn 2s ease-out;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #f1f1f1;
+            animation: fadeIn 3s;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+
+    <div class="container">
+        <h1>Welcome to Task Manager</h1>
+        <p>Ready to manage your tasks efficiently?</p>
+    </div>
+
+    <footer>
+        © 2024 Task Manager. All rights reserved.
+    </footer>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>

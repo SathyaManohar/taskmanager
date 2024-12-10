@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        #task-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .task-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .task-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .task-card h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .task-card p {
+            font-size: 1rem;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .task-card .duedate {
+            color: #777;
+            font-style: italic;
+        }
+
+        .task-card.completed {
+            background-color: #e0f7e0; /* Light green for completed tasks */
+        }
+
+        .task-card .status {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .task-card .cross-mark {
+            font-size: 1.5rem;
+            color: green;
+        }
+
+        .task-card .due-warning {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+
+    <h2>Welcome, <%= user.name %>!</h2>
+
+    <h3>Your Tasks</h3>
+    <div id="task-list">
+        <% tasks.forEach(task => { %>
+            <div class="task-card <%= task.status === 'Completed' ? 'completed' : '' %>">
+                <h3><%= task.title %></h3>
+                <p><%= task.description %></p>
+                <p class="status">Status: <%= task.status %></p>
+                <p class="duedate">Due Date: <%= task.duedate.toISOString().split('T')[0] %></p>
+                <% if (task.status === 'Completed') { %>
+                    <span class="cross-mark">✔️</span> <!-- Cross mark for completed tasks -->
+                <% } else if (new Date(task.duedate) < new Date()) { %>
+                    <span class="due-warning">Overdue</span> <!-- Overdue warning -->
+                <% } %>
+            </div>
+        <% }) %>
+    </div>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>
